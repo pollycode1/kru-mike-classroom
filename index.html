@@ -177,6 +177,9 @@ section{padding:100px 0;position:relative}
 .views .dot{width:9px;height:9px;border-radius:50%;background:#3dff7a;box-shadow:0 0 0 0 rgba(61,255,122,.7);animation:live 1.6s infinite}
 @keyframes live{70%{box-shadow:0 0 0 10px rgba(61,255,122,0)}100%{box-shadow:0 0 0 0 rgba(61,255,122,0)}}
 .views.f{margin:14px auto 0}
+.badge.views-b{display:flex;align-items:center;gap:8px}
+.badge.views-b .dot{width:9px;height:9px;border-radius:50%;background:#22c55e;animation:live 1.6s infinite}
+.badge.views-b b{font-size:1.1rem}
 .hero .views{display:flex;width:fit-content}
 @media(max-width:860px){.hero .views{margin-inline:auto}}
 .views b.pop{animation:pop .6s cubic-bezier(.3,1.8,.5,1)}
@@ -247,13 +250,11 @@ footer .k{color:#fff;font-size:1.3rem;font-weight:800}
       <p class="lead"><b style="color:#fff">การพัฒนาสมรรถภาพการวิ่งด้วยเทคนิค HIIT</b><br>กิจกรรม HIIT RUN Challenge “ฟิตไว วิ่งไกล ใจสู้”<br>เพื่อ <span class="typed" id="typed"></span></p>
       <a href="#hiit" class="btn p">ลองจับเวลา HIIT ⚡</a>
       <a href="#award" class="btn g">ดูรางวัล 🏆</a>
-      <div class="views"><span class="dot"></span>👀 ผู้เข้าชมแล้ว <b class="vc">…</b> ครั้ง</div>
     </div>
     <div class="photo reveal r">
       <div class="ring"></div>
       <img src="img/teacher.jpg" alt="ครูพงษ์ศธร เสมาฉิม ครูพลศึกษา โรงเรียนวัดห้วยโป่ง">
-      <div class="badge b1">🥇 <b>อันดับ 1</b> จ.ระยอง 2 ปีซ้อน</div>
-      <div class="badge b2">💪 นักเรียน ม.3 <b>33 คน</b></div>
+      <div class="badge b2 views-b"><span class="dot"></span>👀 ผู้เข้าชม <b class="vc">…</b> ครั้ง</div>
     </div>
   </div>
   <div class="scroll">เลื่อนลง</div>
@@ -439,14 +440,18 @@ document.getElementById('rs').onclick=reset;draw();
 const aw=document.getElementById('award'),cols=['#ff2e88','#ff8a1f','#ffd23f','#2ee6d6','#fff'];
 for(let i=0;i<40;i++){const c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*100+'%';c.style.background=cols[i%5];c.style.animationDuration=(4+Math.random()*5)+'s';c.style.animationDelay=(-Math.random()*8)+'s';c.style.borderRadius=Math.random()>.5?'50%':'2px';aw.appendChild(c)}
 
-// real visitor counter (abacus.jasoncameron.dev, free; counts once per browser session)
+// real visitor counter: counts once per browser session; tries two free services
 (function(){
   const els=[...document.querySelectorAll('.vc')];
   const show=n=>{const to=+n||0;let s=null;const f=t=>{s=s||t;const p=Math.min((t-s)/1400,1);const v=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString('th-TH');els.forEach(e=>e.textContent=v);if(p<1)requestAnimationFrame(f);else els.forEach(e=>e.classList.add('pop'))};requestAnimationFrame(f)};
   let seen=false;try{seen=sessionStorage.getItem('km_seen')==='1'}catch(e){}
-  const API='https://abacus.jasoncameron.dev/'+(seen?'get':'hit')+'/pollycode1-kru-mike-classroom/views';
-  fetch(API).then(r=>r.json()).then(d=>{try{sessionStorage.setItem('km_seen','1')}catch(e){}show(d.value)})
-  .catch(()=>document.querySelectorAll('.views').forEach(v=>v.style.display='none'));
+  const srcs=[
+    ['https://abacus.jasoncameron.dev/'+(seen?'get':'hit')+'/pollycode1-kru-mike-classroom/views', d=>d.value],
+    ['https://api.counterapi.dev/v1/pollycode1-kru-mike/views'+(seen?'':'/up'), d=>d.count]
+  ];
+  const get=u=>{const c=new AbortController();setTimeout(()=>c.abort(),6000);return fetch(u,{signal:c.signal}).then(r=>{if(!r.ok)throw 0;return r.json()})};
+  (async()=>{for(const [u,pick] of srcs){try{const n=pick(await get(u));if(n==null)throw 0;try{sessionStorage.setItem('km_seen','1')}catch(e){}return show(n)}catch(e){}}
+    document.querySelectorAll('.views,.views-b').forEach(v=>v.style.display='none')})();
 })();
 
 // lightbox
