@@ -5,3 +5,4 @@
 ดูเว็บ: https://pollycode1.github.io/kru-mike-classroom/
 
 แก้ตัวเลขผลก่อน-หลังได้ที่ตัวแปร `RESULTS` ใน index.html
+
