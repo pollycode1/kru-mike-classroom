@@ -162,6 +162,16 @@ section{padding:100px 0;position:relative}
 .award{background:radial-gradient(circle at 50% 0%,rgba(255,210,63,.25),transparent 60%),var(--navy2);overflow:hidden}
 .award-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
 @media(max-width:860px){.award-grid{grid-template-columns:1fr}}
+.medal{margin:14px auto 0;max-width:420px;border-radius:24px;padding:18px 20px;text-align:center;position:relative;overflow:hidden;font-family:'Kanit'}
+.medal::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);animation:sheen 3.2s ease-in-out infinite}
+@keyframes sheen{0%,60%{left:-60%}100%{left:130%}}
+.medal .big{font-weight:900;font-size:clamp(2.4rem,7vw,3.6rem);line-height:1}
+.medal .where{font-weight:800;font-size:clamp(1.3rem,3.5vw,1.8rem)}
+.medal .twice{display:inline-block;margin-top:8px;padding:4px 16px;border-radius:99px;background:var(--pink);color:#fff;font-weight:800;font-size:1.15rem;animation:bob 1.6s ease-in-out infinite}
+.gold-m{background:linear-gradient(135deg,#fff3a8,#ffd23f 40%,#f0a500);color:#5a3a00;box-shadow:0 0 0 4px rgba(255,210,63,.35),0 20px 50px rgba(255,210,63,.45);animation:glow 2s ease-in-out infinite alternate}
+@keyframes glow{to{box-shadow:0 0 0 8px rgba(255,210,63,.2),0 20px 70px rgba(255,210,63,.75)}}
+.bronze-m{background:linear-gradient(135deg,#ffd2a8,#d9844a 45%,#9c5226);color:#fff;max-width:340px;padding:14px 20px}
+.bronze-m .big{font-size:clamp(1.9rem,5vw,2.6rem)}.bronze-m .where{font-size:clamp(1.1rem,3vw,1.4rem)}
 .trophy{font-size:7rem;text-align:center;animation:bob 2.4s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(255,210,63,.7))}
 .award h3{font-size:clamp(1.8rem,4vw,2.6rem);text-align:center}
 .award h3 .gold{color:var(--yellow)}
@@ -173,7 +183,8 @@ section{padding:100px 0;position:relative}
 .stack:hover img:nth-child(1){transform:rotate(-2deg) translateX(-10px)}
 .stack:hover img:nth-child(2){transform:rotate(1deg) translateX(10px)}
 @media(max-width:500px){.stack{height:330px}}
-.confetti{position:absolute;top:-20px;width:10px;height:16px;opacity:.9;animation:fall linear infinite;pointer-events:none}
+.award .wrap{position:relative;z-index:1}
+.confetti{position:absolute;z-index:0;top:-20px;width:10px;height:16px;opacity:.9;animation:fall linear infinite;pointer-events:none}
 @keyframes fall{to{transform:translateY(120vh) rotate(720deg)}}
 
 /* gallery */
@@ -232,7 +243,7 @@ footer .k{color:#fff;font-size:1.3rem;font-weight:800}
     <div class="photo reveal r">
       <div class="ring"></div>
       <img src="img/teacher.jpg" alt="ครูพงษ์ศธร เสมาฉิม ครูพลศึกษา โรงเรียนวัดห้วยโป่ง">
-      <div class="badge b1">🥇 ชนะเลิศ <b>อันดับ 1</b></div>
+      <div class="badge b1">🥇 <b>อันดับ 1</b> จ.ระยอง 2 ปีซ้อน</div>
       <div class="badge b2">💪 นักเรียน ม.3 <b>33 คน</b></div>
     </div>
   </div>
@@ -252,7 +263,7 @@ footer .k{color:#fff;font-size:1.3rem;font-weight:800}
       <div class="stat reveal"><div class="ic">👟</div><div class="n" data-count="33">0</div><div class="t">นักเรียน ม.3</div></div>
       <div class="stat reveal"><div class="ic">⏱️</div><div class="n" data-count="20" data-suf="/10">0</div><div class="t">วินาที ทำ / พัก</div></div>
       <div class="stat reveal"><div class="ic">📅</div><div class="n" data-count="8">0</div><div class="t">สัปดาห์ของการฝึก</div></div>
-      <div class="stat reveal"><div class="ic">🏆</div><div class="n" data-count="1" data-pre="#">0</div><div class="t">ชนะเลิศ ภาคตะวันออก</div></div>
+      <div class="stat reveal"><div class="ic">🏆</div><div class="n" data-count="1" data-pre="#">0</div><div class="t">จ.ระยอง 2 ปีซ้อน · #3 ภาคตะวันออก</div></div>
     </div>
     <div class="intro">
       <img class="reveal l" src="img/lesson2.jpg" alt="ครูไมค์อธิบายการวิ่งบนไวท์บอร์ด">
@@ -315,9 +326,10 @@ footer .k{color:#fff;font-size:1.3rem;font-weight:800}
   <div class="wrap award-grid">
     <div class="reveal l">
       <div class="trophy">🏆</div>
-      <h3>ชนะเลิศ <span class="gold">อันดับ 1</span></h3>
-      <p class="k" style="font-size:1.25rem;color:#fff">การแข่งขันกีฬานักเรียน นักศึกษา<br>ประจำปี 2568–2569</p>
-      <p>นักเรียนโรงเรียนวัดห้วยโป่ง ได้รับคัดเลือกเป็น<b style="color:var(--yellow)"> ตัวแทนภาคตะวันออก</b><br>ผลลัพธ์จากการฝึกวิ่งด้วย HIIT อย่างต่อเนื่อง</p>
+      <div class="medal gold-m"><div class="big">อันดับ 1</div><div class="where">ของจังหวัดระยอง</div><div class="twice">🔥 2 ปีซ้อน 🔥</div></div>
+      <div class="medal bronze-m"><div class="big">อันดับ 3</div><div class="where">ของภาคตะวันออก</div></div>
+      <p class="k" style="font-size:1.2rem;color:#fff;margin-top:18px">การแข่งขันกีฬานักเรียน นักศึกษา<br>ประจำปี 2568–2569</p>
+      <p>ความภาคภูมิใจของโรงเรียนวัดห้วยโป่ง<br>ผลลัพธ์จากการฝึกวิ่งด้วย HIIT อย่างต่อเนื่อง</p>
     </div>
     <div class="stack reveal r">
       <img src="img/podium.jpg" alt="นักเรียนรับรางวัลบนโพเดียม">
